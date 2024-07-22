@@ -42,4 +42,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+        /**
+     * Get the permissions for the user.
+     */
+    public function permisos()
+    {
+        return $this->belongsToMany(Permiso::class, 'detalle_permisos', 'id_usuario', 'id_permiso');
+    }
+
+    /**
+     * Check if the user has a specific permission.
+     *
+     * @param string $permissionName
+     * @return bool
+     */
+    public function hasPermission($permissionName)
+    {
+        return $this->permisos()->where('nombre', $permissionName)->exists();
+    }
 }
