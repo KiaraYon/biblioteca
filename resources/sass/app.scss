@@ -1,8 +1,52 @@
 // Fonts
-@import url('https://fonts.bunny.net/css?family=Nunito');
+@import url("https://fonts.bunny.net/css?family=Nunito");
 
 // Variables
-@import 'variables';
+@import "variables";
 
 // Bootstrap
-@import 'bootstrap/scss/bootstrap';
+@import "bootstrap/scss/bootstrap";
+
+.navbar {
+    background-color: #037bc6;
+}
+
+.sidebar {
+    background-color: #2fc1ff; /* Un azul más claro */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombreado */
+    height: 100vh;
+    padding: 20px;
+}
+
+.sidebar .card {
+    background-color: white; /* Botones blancos */
+    color: #2fc1ff; /* Letras del color del sidebar */
+    border: none; /* Sin borde */
+    margin-bottom: 10px; /* Margen entre las tarjetas */
+}
+
+.sidebar .card .card-title {
+    color: #2fc1ff; /* Letras del color del sidebar */
+    margin: 0; /* Sin margen */
+    padding: 1px 0; /* Relleno arriba y abajo */
+}
+
+.sidebar .card a {
+    color: #2fc1ff; /* Letras del color del sidebar */
+    text-decoration: none; /* Sin subrayado */
+}
+
+.sidebar .card a:hover {
+    color: #2fc1ff; /* Letras del color del sidebar en el hover */
+    background-color: #e6f7ff; /* Un tono más claro en el hover */
+}
+
+.sidebar img {
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+    margin: 20px 0; /* Margen superior e inferior */
+    max-width: 50%; /* Asegura que la imagen no exceda el ancho del contenedor */
+    display: block; /* Centra la imagen horizontalmente */
+    margin-left: auto; /* Centra la imagen horizontalmente */
+    margin-right: auto; /* Centra la imagen horizontalmente */
+}
