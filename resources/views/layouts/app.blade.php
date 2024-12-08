@@ -13,8 +13,7 @@
     <link rel="icon" href="{{ asset('images/logo2.jpeg') }}" type="image/png">
 
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Scripts -->
@@ -22,206 +21,310 @@
 
     <!-- Custom Styles -->
     <style>
+        /* General */
         body {
             background-color: #f4f4f4;
-        }
-
-        .navbar {
-            background-color: #007bff;
-        }
-
-        .navbar-brand h4 {
-            color: white;
+            font-family: 'Nunito', sans-serif;
             margin: 0;
         }
 
-        .navbar-nav .nav-link {
-            color: white;
+        /* Barra Superior */
+        .topbar {
+            background-color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1050;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .navbar-nav .nav-link:hover {
-            color: #e2e6ea;
+        .topbar .nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
         }
 
-        .card {
-            border-radius: 10px;
-            border: none;
+        .topbar .nav-item {
+            margin-left: 20px;
         }
 
-        .form-control {
-            border-radius: 20px;
+        .topbar .nav-link {
+            text-decoration: none;
+            color: #555;
+            font-weight: bold;
+            transition: color 0.3s ease;
         }
 
-        .btn-primary {
-            background-color: #007bff;
-            border-radius: 20px;
-            border: none;
+        .topbar .nav-link:hover {
+            color: #007bff;
         }
 
+        /* Sidebar */
         .sidebar {
-            background-color: #f8f9fa;
+            background-color: #fff;
+            width: 240px; /* Ajuste de tamaño del sidebar */
+            height: 100vh;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 60px;
+            left: -240px; /* Oculto inicialmente */
+            transition: left 0.3s ease;
+            overflow-y: auto;
+            z-index: 1040;
         }
 
-        .sidebar .card {
-            transition: background-color 0.3s ease;
+        .sidebar.open {
+            left: 0; /* Mostrar sidebar */
         }
 
-        .sidebar .card:hover {
-            background-color: #e2e6ea;
+        .sidebar .logo {
+            text-align: center;
+            margin-bottom: 20px;
         }
 
-        .sidebar img {
-            margin-top: 20px;
+        .sidebar .menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
         }
 
-        .scrollable-div {
-            padding: 15px;
+        .sidebar .menu li {
+            margin-bottom: 10px; /* Reducir espacio entre botones */
         }
 
+        .sidebar .menu a {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px; /* Reducir tamaño de los botones */
+            font-size: 14px; /* Reducir tamaño de texto */
+            color: #555;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar .menu a:hover {
+            background-color: #f0f4ff;
+            color: #007bff;
+        }
+
+        .sidebar .menu a .icon {
+            width: 40px; /* Reducir tamaño del ícono */
+            height: 40px; /* Reducir tamaño del ícono */
+            background-color: #eef3f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px; /* Ajuste para íconos más pequeños */
+            margin-right: 10px; /* Espaciado más pequeño */
+            font-size: 18px; /* Reducir tamaño de ícono */
+            color: #555;
+        }
+
+        .sidebar .menu a:hover .icon {
+            background-color: #dce9ff;
+            color: #007bff;
+        }
+
+        /* Contenido principal */
         .main-content {
+            margin-left: 0;
+            margin-top: 60px;
             padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: margin-left 0.3s ease;
         }
 
-
-        @media (min-width: 1200px) {
-            .col-md-10 {
-                max-width: 75%;
-                margin-left: auto;
-                margin-right: auto;
-            }
+        .main-content.shifted {
+            margin-left: 240px; /* Ajuste según el nuevo ancho del sidebar */
         }
 
+        .toggle-sidebar {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
+        .menu a.active {
+            font-weight: bold; /* Texto en negrita */
+            background-color: #dce9ff;
+            color: #007bff;
+        }
+
+        .menu a.active .icon {
+
+            background-color: #dce9ff;
+            color: #007bff;
+        }
+
+        /* Estilos Responsivos */
         @media (max-width: 768px) {
             .sidebar {
-                display: none;
+                width: 100%; /* Sidebar ocupa toda la pantalla */
+                left: -100%; /* Oculto inicialmente */
             }
 
-            .col-md-10 {
-                max-width: 100%;
+            .sidebar.open {
+                left: 0; /* Mostrar sidebar */
             }
 
-            .navbar-toggler {
-                border: none;
-                background-color: #fff;
+            .main-content {
+                margin-left: 0;
             }
 
-            .navbar-brand h4 {
-                font-size: 18px; /* Reducir el tamaño del título en pantallas pequeñas */
+            .main-content.shifted {
+                margin-left: 0; /* Sin margen en pantallas pequeñas */
             }
+
         }
     </style>
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-md navbar-light shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
-                <h4>Biblioteca Municipal</h4>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                <span class="navbar-toggler-icon"></span>
+    <!-- Barra superior -->
+    <div class="topbar rounded-3">
+        @if(Auth::check())
+            <button class="toggle-sidebar" id="toggleSidebar">
+                <i class="bi bi-list"></i>
             </button>
+        @endif
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto">
-                    @guest
-                        @if (Route::has('login'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Iniciar sesión') }}</a>
-                            </li>
-                        @endif
-                        @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Registrar') }}</a>
-                            </li>
-                        @endif
-                    @else
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                {{ Auth::user()->name }}
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    {{ __('Salir') }}
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li>
-                    @endguest
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            @auth
-                <div class="col-md-2 sidebar">
-                    <div class="scrollable-div overflow-auto" style="height: 100vh;">
-                        <div class="card mt-2 d-flex flex-column justify-content-center align-items-center py-2 card-hover">
-                            <h5 class="card-title"><i class="bi bi-people-fill"></i> Estudiantes</h5>
-                            <a href="{{ route('estudiantes.index') }}" class="stretched-link"></a>
-                        </div>
-
-                        <div class="card mt-2 d-flex flex-column justify-content-center align-items-center py-2 card-hover">
-                            <h5 class="card-title"><i class="bi bi-person-vcard-fill"></i> Prestamos</h5>
-                            <a href="{{ route('prestamos.index') }}" class="stretched-link"></a>
-                        </div>
-
-                        <div class="card mt-2 d-flex flex-column justify-content-center align-items-center py-2 card-hover">
-                            <h5 class="card-title"><i class="bi bi-book-fill"></i> Libros</h5>
-                            <a href="{{ route('libros.index') }}" class="stretched-link"></a>
-                        </div>
-
-                        <div class="card mt-2 d-flex flex-column justify-content-center align-items-center py-2 card-hover">
-                            <h5 class="card-title"><i class="bi bi-person-lines-fill"></i> Autor</h5>
-                            <a href="{{ route('autors.index') }}" class="stretched-link"></a>
-                        </div>
-
-                        <div class="card mt-2 d-flex flex-column justify-content-center align-items-center py-2 card-hover">
-                            <h5 class="card-title"><i class="bi bi-list-task"></i> Detalle Permiso</h5>
-                            <a href="{{ route('detalle-permisos.index') }}" class="stretched-link"></a>
-                        </div>
-
-                        <div class="card mt-2 d-flex flex-column justify-content-center align-items-center py-2 card-hover">
-                            <h5 class="card-title"><i class="bi bi-building-fill"></i> Editoriales</h5>
-                            <a href="{{ route('editoriales.index') }}" class="stretched-link"></a>
-                        </div>
-
-                        <div class="card mt-2 d-flex flex-column justify-content-center align-items-center py-2 card-hover">
-                            <h5 class="card-title"><i class="bi bi-collection-fill"></i> Materias</h5>
-                            <a href="{{ route('materia.index') }}" class="stretched-link"></a>
-                        </div>
-                        <img src="{{ asset('images/logo.jpeg') }}" alt="Logo" class="img-fluid mt-10 ms-0">
+        <ul class="nav">
+            @guest
+                @if (Route::has('login'))
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">{{ __('Iniciar sesión') }}</a>
+                    </li>
+                @endif
+            @else
+                <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ Auth::user()->name }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                            {{ __('Editar Perfil') }}
+                        </a>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            {{ __('Cerrar Sesión') }}
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
                     </div>
-                </div>
-            @endauth
-
-            <main class="col-md-10 py-4">
-                <div class="main-content">
-                    @yield('content')
-                </div>
-            </main>
-        </div>
+                </li>
+            @endguest
+        </ul>
     </div>
+
+    @if(Auth::check())
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <a href="{{ route('home') }}" style="text-decoration: none; color: inherit;">
+                    <img src="{{ asset('images/logo2.jpeg') }}" alt="Logo">
+                    <h5>Biblioteca Municipal</h5>
+                </a>
+            </div>
+            <ul class="menu">
+                @if(Auth::user()->hasPermission('ver-estudiantes'))
+                    <li>
+                        <a href="{{ route('estudiantes.index') }}"
+                           class="{{ Route::is('estudiantes.*') ? 'active' : '' }}">
+                            <span class="icon"><i class="bi bi-people-fill"></i></span> Estudiantes
+                        </a>
+                    </li>
+                @endif
+
+                @if(Auth::user()->hasPermission('ver-prestamos'))
+                    <li>
+                        <a href="{{ route('prestamos.index') }}" class="{{ Route::is('prestamos.*') ? 'active' : '' }}">
+                            <span class="icon"><i class="bi bi-person-vcard-fill"></i></span> Préstamos
+                        </a>
+                    </li>
+                @endif
+
+                @if(Auth::user()->hasPermission('ver-libros'))
+                    <li>
+                        <a href="{{ route('libros.index') }}" class="{{ Route::is('libros.*') ? 'active' : '' }}">
+                            <span class="icon"><i class="bi bi-book-fill"></i></span> Libros
+                        </a>
+                    </li>
+                @endif
+
+                @if(Auth::user()->hasPermission('ver-autores'))
+                    <li>
+                        <a href="{{ route('autors.index') }}" class="{{ Route::is('autors.*') ? 'active' : '' }}">
+                            <span class="icon"><i class="bi bi-person-lines-fill"></i></span> Autor
+                        </a>
+                    </li>
+                @endif
+
+                    @if(Auth::user()->hasPermission('ver-roles'))
+                    <li>
+                        <a href="{{ route('roles.index') }}"
+                           class="{{ Route::is('roles.*') ? 'active' : '' }}">
+                            <span class="icon"><i class="bi bi-list-task"></i></span> Roles
+                        </a>
+                    </li>
+                    @endif
+
+                @if(Auth::user()->hasPermission('ver-editoriales'))
+                    <li>
+                        <a href="{{ route('editoriales.index') }}"
+                           class="{{ Route::is('editoriales.*') ? 'active' : '' }}">
+                            <span class="icon"><i class="bi bi-building-fill"></i></span> Editoriales
+                        </a>
+                    </li>
+                @endif
+
+                @if(Auth::user()->hasPermission('ver-materias'))
+                    <li>
+                        <a href="{{ route('materia.index') }}" class="{{ Route::is('materia.*') ? 'active' : '' }}">
+                            <span class="icon"><i class="bi bi-collection-fill"></i></span> Materias
+                        </a>
+                    </li>
+                @endif
+
+                @if(Auth::user()->hasPermission('ver-usuarios'))
+                    <li>
+                        <a href="{{ route('users.index') }}" class="{{ Route::is('users.*') ? 'active' : '' }}">
+                            <span class="icon"><i class="bi bi-people-fill"></i></span> Usuarios
+                        </a>
+                    </li>
+                @endif
+            </ul>
+
+        </div>
+    @endif
+
+    <!-- Contenido Principal -->
+    <main class="main-content" id="mainContent">
+        @yield('content')
+    </main>
 </div>
 
-<!-- Bootstrap JS Bundle -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Custom Script for Dropdown -->
+<!-- Scripts -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        const toggleButton = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const menuLinks = document.querySelectorAll('.sidebar .menu a');
+
         var dropdownToggle = document.getElementById('navbarDropdown');
         if (dropdownToggle) {
             dropdownToggle.addEventListener('click', function (event) {
@@ -232,7 +335,56 @@
                 }
             });
         }
+
+        // Restaurar el estado del sidebar desde localStorage
+        if (localStorage.getItem('sidebarOpen') === 'true' && window.innerWidth > 768) {
+            sidebar.classList.add('open');
+            mainContent.classList.add('shifted');
+        }
+
+        // Manejar clic en el botón de alternar
+        if (toggleButton) {
+            toggleButton.addEventListener('click', function () {
+                sidebar.classList.toggle('open');
+                mainContent.classList.toggle('shifted');
+                // Guardar el estado en localStorage solo para pantallas grandes
+                if (window.innerWidth > 768) {
+                    localStorage.setItem('sidebarOpen', sidebar.classList.contains('open'));
+                }
+            });
+        }
+
+        // Cerrar el sidebar automáticamente en pantallas pequeñas al hacer clic en un enlace
+        menuLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.remove('open');
+                    mainContent.classList.remove('shifted');
+                }
+            });
+        });
+
+        // Escuchar cambios en el tamaño de la ventana
+        window.addEventListener('resize', function () {
+            if (window.innerWidth > 768) {
+                // Restaurar el estado del sidebar en pantallas grandes
+                if (localStorage.getItem('sidebarOpen') === 'true') {
+                    sidebar.classList.add('open');
+                    mainContent.classList.add('shifted');
+                }
+            } else {
+                // Ocultar el sidebar automáticamente en pantallas pequeñas
+                sidebar.classList.remove('open');
+                mainContent.classList.remove('shifted');
+            }
+        });
     });
+
+
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
+

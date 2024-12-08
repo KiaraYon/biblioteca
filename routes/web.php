@@ -12,6 +12,10 @@ use App\Http\Controllers\MateriumController;
 use App\Http\Controllers\AutorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -40,6 +44,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('editoriales', EditorialController::class)->middleware('permission:ver-editoriales');
     Route::resource('materia', MateriumController::class)->middleware('permission:ver-materias');
     Route::resource('autors', AutorController::class)->middleware('permission:ver-autores');
+    Route::resource('users', UserController::class)->middleware('permission:ver-usuarios');
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::resource('roles', RoleController::class)->middleware('permission:ver-roles');
 
     Route::get('/get-estudiante-codigo/{id}', [App\Http\Controllers\EstudianteController::class, 'getCodigo']);
     Route::patch('/prestamos/{prestamo}/inactivar', [PrestamoController::class, 'inactivar'])->name('prestamos.inactivar');

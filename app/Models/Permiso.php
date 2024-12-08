@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Permiso extends Model
 {
-    
+
     static $rules = [
 		'nombre' => 'required|string',
 		'tipo' => 'required',
@@ -38,10 +38,14 @@ class Permiso extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function detallePermisos()
+    public function roles()
     {
-        return $this->hasMany(\App\Models\DetallePermiso::class, 'id', 'id_permiso');
+        return $this->belongsToMany(Role::class, 'role_permiso');
     }
-    
+
+    public function usuarios()
+    {
+        return $this->belongsToMany(User::class, 'detalle_permisos', 'id_permiso', 'id_usuario');
+    }
 
 }
