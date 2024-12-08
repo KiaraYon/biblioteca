@@ -15,7 +15,7 @@ return new class extends Migration
 
             $table->engine="InnoDB";
             $table->bigIncrements('id');
-            $table->integer('titulo')->nullable();
+            $table->string('titulo')->nullable();
             $table->integer('cantidad');
             $table->bigInteger('id_autor')->unsigned();
             $table->bigInteger('id_editorial')->unsigned();

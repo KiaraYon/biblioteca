@@ -28,7 +28,7 @@ class Estudiante extends Model
 
     static $rules = [
 		'codigo' => 'required|string',
-		'dpi' => 'required|string',
+		'dpi' => 'string|nullable',
 		'nombre' => 'required|string',
 		'carrera' => 'string',
 		'direccion' => 'required|string',

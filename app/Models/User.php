@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -46,19 +45,36 @@ class User extends Authenticatable
         /**
      * Get the permissions for the user.
      */
-    public function permisos()
+    public function roles()
     {
-        return $this->belongsToMany(Permiso::class, 'detalle_permisos', 'id_usuario', 'id_permiso');
+        return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id');
     }
 
     /**
-     * Check if the user has a specific permission.
+     * Verificar si el usuario tiene un permiso específico.
      *
      * @param string $permissionName
      * @return bool
      */
     public function hasPermission($permissionName)
     {
-        return $this->permisos()->where('nombre', $permissionName)->exists();
+        foreach ($this->roles as $role) {
+            if ($role->permisos->contains('nombre', $permissionName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Verificar si el usuario tiene un rol específico.
+     *
+     * @param string $roleName
+     * @return bool
+     */
+    public function hasRole($roleName)
+    {
+        return $this->roles->contains('nombre', $roleName);
     }
 }
+
