@@ -111,7 +111,7 @@ class PrestamoController extends Controller
                     "Fecha de Devolución: " . $prestamo->fecha_devolucion;
 
             try {
-                $response = Http::get('http://127.0.0.1:8000/send-notification', [
+                $response = Http::post('http://127.0.0.1:8000/send-notification', [
                     'phone' => $estudiante->telefono,
                     'message' => $message,
                 ]);
@@ -202,10 +202,13 @@ class PrestamoController extends Controller
                        "Fecha de Devolución: " . $prestamo->fecha_devolucion;
 
             try {
-                $response = Http::get('http://127.0.0.1:8000/send-notification', [
+                $response = Http::post('http://127.0.0.1:8000/send-notification', [
                     'phone' => $estudiante->telefono,
                     'message' => $message,
                 ]);
+
+                Log::info('telefono: '. $estudiante->telefono);
+                Log::info('mensaje: '. $message);
 
                 if ($response->successful()) {
                     Log::info('Notificación de WhatsApp enviada exitosamente.');
@@ -245,7 +248,7 @@ class PrestamoController extends Controller
 
             // Enviar notificación de WhatsApp al estudiante
             try {
-                $response = Http::get('http://127.0.0.1:8000/send-notification', [
+                $response = Http::post('http://127.0.0.1:8000/send-notification', [
                     'phone' => $estudiante->telefono, // Asegúrate de que este campo esté disponible en tu modelo Estudiante
                     'message' => $message,
                 ]);

@@ -84,7 +84,7 @@ class EnviarNotificacionesPrestamos extends Command
     private function enviarNotificacion($telefono, $mensaje)
     {
         try {
-            $response = Http::get('http://127.0.0.1:8000/send-notification', [
+            $response = Http::post('http://127.0.0.1:8000/send-notification', [
                 'phone' => $telefono,
                 'message' => $mensaje,
             ]);

@@ -54,6 +54,7 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-        <script src="{{ mix('js/app.js') }}"></script>
+        @vite(['resources/js/app.js', 'resources/sass/app.scss'])
+
     </body>
 </html>

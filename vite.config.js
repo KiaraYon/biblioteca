@@ -5,10 +5,14 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/sass/app.scss',
-                'resources/js/app.js',
+                'resources/sass/app.scss', // Incluye el archivo SCSS aquí
+                'resources/js/app.js',    // Incluye el archivo JS aquí
             ],
-            refresh: true,
+            refresh: true, // Esto es solo para desarrollo
         }),
     ],
+    build: {
+        outDir: 'public/build', // Directorio de salida en producción
+        emptyOutDir: true,
+    },
 });
