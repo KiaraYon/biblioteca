@@ -233,6 +233,9 @@ class PrestamoController extends Controller
         DB::beginTransaction();
         try {
             $prestamo = Prestamo::findOrFail($id);
+            $libro = Libro::findOrFail($prestamo->id_libro);
+            $libro->cantidad += $prestamo->cantidad;
+            $libro->save();
             $prestamo->estado = 0; // Cambia el estado a "Inactivo"
             $prestamo->save();
 
